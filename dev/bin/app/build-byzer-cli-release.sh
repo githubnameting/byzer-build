@@ -22,18 +22,18 @@
 # Layout looks like:
 #├── bin
 #│ ├── byzer                 ## byzer-cli
-#│ └── start-mlsql-app.sh    ##
-#│ └── start-mlsql-app.cmd   ##
+#│ └── start-byzer-app.sh    ##
+#│ └── start-byzer-app.cmd   ##
 #├── libs          ## 3rd-party jars
 #│ ├── ansj_seg-5.1.6.jar
 #│ └── nlp-lang-1.7.8.jar
 #|-- jdk8
 #├── main                   ## byzer-lang uber jar
-#│ └── streamingpro-mlsql-spark_2.4_2.11-2.1.0.jar
-#├── plugin      ## kolo-lang plugins
-#│ ├── mlsql-assert-2.4_2.11-0.1.0-SNAPSHOT.jar
-#│ ├── mlsql-excel-2.4_2.11-0.1.0-SNAPSHOT.jar
-#│ └── mlsql-shell-2.4_2.11-0.1.0-SNAPSHOT.jar
+#│ └── streamingpro-byzer-spark_2.4_2.11-2.1.0.jar
+#├── plugin      ## byzer-lang plugins
+#│ ├── byzer-assert-2.4_2.11-0.1.0-SNAPSHOT.jar
+#│ ├── byzer-excel-2.4_2.11-0.1.0-SNAPSHOT.jar
+#│ └── byzer-shell-2.4_2.11-0.1.0-SNAPSHOT.jar
 #├── hadoop-3.0.0           ## hadoop native lib for windows
 #└── spark                  ## Spark jars
 #
@@ -57,7 +57,7 @@ EOF
 
 ## Current script name
 myself=$(basename "$0")
-## base -- kolo-build project base dir
+## base -- byzer-build project base dir
 base=$(cd "$(dirname "$0")"/../../.. && pwd)
 ## Byzer download base url
 download_base_url="https://download.byzer.org/"
@@ -124,20 +124,20 @@ function download_jdk8 {
 }
 
 function cp_plugins {
-  local declare array plugins=(mlsql-excel mlsql-shell mlsql-assert mlsql-language-server mlsql-ext-ets mlsql-mllib)
+  local declare array plugins=(byzer-excel byzer-shell byzer-assert byzer-language-server byzer-ext-ets byzer-mllib)
   for p in "${plugins[@]}"
   do
     cp ${base}/dev/lib/${p}-${byzer_spark_version}_${scala_binary_version}-0.1.0-SNAPSHOT.jar ${target_dir}/plugin/${p}-${byzer_spark_version}-0.1.0-SNAPSHOT.jar
   done
-  cp ${base}/dev/lib/mlsql-language-server-${byzer_spark_version}_${scala_binary_version}-0.1.0-SNAPSHOT.jar ${target_dir}/plugin/
+  cp ${base}/dev/lib/byzer-language-server-${byzer_spark_version}_${scala_binary_version}-0.1.0-SNAPSHOT.jar ${target_dir}/plugin/
   echo "plugin copy succeed"
 }
 
 function cp_byzer_lang {
   echo "cp byzer lang ${byzer_lang_version}"
 
-  tar -xf "${base}/dev/lib/mlsql-engine_${byzer_spark_version}-${byzer_lang_version}.tar.gz" -C "${target_dir}/tmp"
-  cp "${target_dir}/tmp/mlsql-engine_${byzer_spark_version}-${byzer_lang_version}/libs/streamingpro-mlsql-spark_${byzer_spark_version}_${scala_binary_version}-${byzer_lang_version}.jar" \
+  tar -xf "${base}/dev/lib/byzer-engine_${byzer_spark_version}-${byzer_lang_version}.tar.gz" -C "${target_dir}/tmp"
+  cp "${target_dir}/tmp/byzer-engine_${byzer_spark_version}-${byzer_lang_version}/libs/streamingpro-byzer-spark_${byzer_spark_version}_${scala_binary_version}-${byzer_lang_version}.jar" \
   "${target_dir}/main/"
 
   echo "copy byzer-lang uber jar succeed"
@@ -146,9 +146,9 @@ function cp_byzer_lang {
 function download_cli {
   local url="${download_base_url}/byzer/misc/"
   echo "Downloading byzr cli executables "
-  wget --no-check-certificate --no-verbose "${url}/mlsql-darwin-amd64" --output-document "${target_dir}/bin/byzer"
-  wget --no-check-certificate --no-verbose "${url}/mlsql-linux-amd64" --output-document "${target_dir}/bin/byzer"
-  wget --no-check-certificate --no-verbose "${url}/mlsql-windows-amd64.exe" --output-document "${target_dir}/bin/byzer.exe"
+  wget --no-check-certificate --no-verbose "${url}/byzer-darwin-amd64" --output-document "${target_dir}/bin/byzer"
+  wget --no-check-certificate --no-verbose "${url}/byzer-linux-amd64" --output-document "${target_dir}/bin/byzer"
+  wget --no-check-certificate --no-verbose "${url}/byzer-windows-amd64.exe" --output-document "${target_dir}/bin/byzer.exe"
 
   if [[ ! -f "${target_dir}/bin/byzer" ]]
   then
@@ -162,11 +162,11 @@ function download_cli {
 function download_3rd_party_jars {
   if [[ ! -f ${base}/dev/lib/ansj_seg-5.1.6.jar ]]
   then
-    wget --no-check-certificate --no-verbose "http://download.mlsql.tech/nlp/ansj_seg-5.1.6.jar" --directory-prefix "${base}/dev/lib/"
+    wget --no-check-certificate --no-verbose "https://download.byzer.org/byzer/misc/ansj_seg-5.1.6.jar" --directory-prefix "${base}/dev/lib/"
   fi
   if [[ ! -f ${base}/dev/lib/nlp-lang-1.7.8.jar ]]
   then
-    wget --no-check-certificate --no-verbose http://download.mlsql.tech/nlp/nlp-lang-1.7.8.jar --directory-prefix "${base}/dev/lib/"
+    wget --no-check-certificate --no-verbose https://download.byzer.org/byzer/misc/nlp-lang-1.7.8.jar --directory-prefix "${base}/dev/lib/"
   fi
   cp ${base}/dev/lib/ansj_seg-5.1.6.jar ${target_dir}/libs/
   cp ${base}/dev/lib/nlp-lang-1.7.8.jar ${target_dir}/libs/
@@ -240,8 +240,8 @@ mkdir -p "${target_dir}/tmp"
 
 download_jdk8
 
-cp "${base}/dev/bin/app/start-mlsql-app.sh" "${target_dir}/bin/"
-cp "${base}/dev/bin/app/start-mlsql-app.cmd" "${target_dir}/bin/"
+cp "${base}/dev/bin/app/start-byzer-app.sh" "${target_dir}/bin/"
+cp "${base}/dev/bin/app/start-byzer-app.cmd" "${target_dir}/bin/"
 download_cli
 
 cp_plugins

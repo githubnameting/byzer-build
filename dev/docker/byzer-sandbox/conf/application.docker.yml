@@ -8,9 +8,9 @@ production:
     mysql:
       host: 127.0.0.1
       port: 3306
-      database: mlsql_console
+      database: byzer_console
       username: root
-      password: mlsql
+      password: byzer
       disable: false
       initialSize: 3
       removeAbandoned: true
@@ -27,10 +27,10 @@ production:
 ###############application config##################
 #'model' for relational database  like MySQL
 #'document' for NoSQL database model configuration,  MongoDB
-auth_secret: "mlsql"
+auth_secret: "byzer"
 application:
-  controller: tech.mlsql.api.controller
-  model:      tech.mlsql.model
+  controller: tech.byzer.api.controller
+  model:      tech.byzer.model
   test:       test.com.example
   static:
     enable: true

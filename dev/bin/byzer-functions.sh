@@ -20,18 +20,18 @@ set -u
 set -e
 set -o pipefail
 
-# ie kolo-build root path
+# ie byzer-build root path
 base_dir=$(cd "$(dirname $0)/../.." && pwd)
-mlsql_console_path="${base_dir}/console"
+byzer_console_path="${base_dir}/console"
 byzer_notebook_path="${base_dir}/byzer-notebook"
 base_image_path="${base_dir}/dev/docker/base"
-mlsql_sandbox_path="${base_dir}/dev/docker/mlsql-sandbox"
+byzer_sandbox_path="${base_dir}/dev/docker/byzer-sandbox"
 lib_path=${base_dir}/dev/lib
 
 # Many environment variables are inferred from SPARK_VERSION
 export SPARK_VERSION=${SPARK_VERSION:-3.1.1}
 
-#export MLSQL_CONSOLE_VERSION=${MLSQL_CONSOLE_VERSION:-2.2.1-SNAPSHOT}
+#export BYZER_CONSOLE_VERSION=${BYZER_CONSOLE_VERSION:-2.2.1-SNAPSHOT}
 export BYZER_NOTEBOOK_VERSION=${BYZER_NOTEBOOK_VERSION:-1.0.2-SNAPSHOT}
 export BYZER_NOTEBOOK_HOME=$byzer_notebook_path
 
@@ -41,14 +41,14 @@ then
     export HADOOP_TGZ_NAME="hadoop-2.7.0"
     export AZURE_BLOB_NAME="azure-blob_2.7-1.0-SNAPSHOT.jar"
     export SCALA_BINARY_VERSION=2.11
-    export MLSQL_SPARK_VERSION=2.4
+    export BYZER_SPARK_VERSION=2.4
 elif [[ ${SPARK_VERSION} == "3.1.1" ]]
 then
     export SPARK_TGZ_NAME="spark-${SPARK_VERSION}-bin-hadoop3.2"
     export AZURE_BLOB_NAME="azure-blob_3.2-1.0-SNAPSHOT.jar"
     export HADOOP_TGZ_NAME="hadoop-3.2.2"
     export SCALA_BINARY_VERSION=2.12
-    export MLSQL_SPARK_VERSION=3.0
+    export BYZER_SPARK_VERSION=3.0
 else
     echo "Only Spark 2.4.3 or 3.1.1 is supported"
     exit 1
@@ -57,15 +57,15 @@ fi
 cat << EOF
 BYZER_LANG_VERSION ${BYZER_LANG_VERSION}
 SPARK_VERSION ${SPARK_VERSION}
-MLSQL_SPARK_VERSION ${MLSQL_SPARK_VERSION}
+BYZER_SPARK_VERSION ${BYZER_SPARK_VERSION}
 AZURE_BLOB_NAME ${AZURE_BLOB_NAME}
 SPARK_TGZ_NAME ${SPARK_TGZ_NAME}
 HADOOP_TGZ_NAME ${HADOOP_TGZ_NAME}
 SCALA_BINARY_VERSION ${SCALA_BINARY_VERSION}
 EOF
 
-## Builds mlsql distribution tar ball
-function build_kolo_lang_distribution {
+## Builds byzer distribution tar ball
+function build_byzer_lang_distribution {
 
     ## Download jars & packages if needed
     if [[ ! -f "${lib_path}/${SPARK_TGZ_NAME}.tgz" && ${SPARK_VERSION} == "3.1.1" ]]
@@ -198,12 +198,12 @@ function build_kolo_lang_distribution {
 
     if [[ ! -f "${lib_path}/ansj_seg-5.1.6.jar" ]]
     then
-      ( cd "${lib_path}" && curl -O http://download.mlsql.tech/nlp/ansj_seg-5.1.6.jar ) || exit 1
+      ( cd "${lib_path}" && curl -O https://download.byzer.org/byzer/misc/ansj_seg-5.1.6.jar ) || exit 1
     fi
 
     if [[ ! -f "${lib_path}/nlp-lang-1.7.8.jar" ]]
     then
-      ( cd "${lib_path}" && curl -O http://download.mlsql.tech/nlp/nlp-lang-1.7.8.jar ) || exit 1
+      ( cd "${lib_path}" && curl -O https://download.byzer.org/byzer/misc/nlp-lang-1.7.8.jar ) || exit 1
     fi
 
     if [[ ${SPARK_VERSION} == "2.4.3" && ! -f "${lib_path}/azure-blob_2.7-1.0-SNAPSHOT.jar" ]]
@@ -219,7 +219,7 @@ function build_kolo_lang_distribution {
     fi
 
     ## if byzer-lang tar ball does not exist in dev/lib, exit
-    if [[ ! -f "${lib_path}/mlsql-engine_${MLSQL_SPARK_VERSION}-${BYZER_LANG_VERSION}.tar.gz" ]]
+    if [[ ! -f "${lib_path}/byzer-lang_${SPARK_VERSION}-${BYZER_LANG_VERSION}.tar.gz" ]]
     then
       echo "Please put Byzer-lang tar ball in dev/lib"
       exit 1
@@ -228,18 +228,18 @@ function build_kolo_lang_distribution {
 
 }
 
-## Builds mlsql-api-console shade jar
-function build_mlsql_api_console {
-    ## Build mlsql-api-console
+## Builds byzer-api-console shade jar
+function build_byzer_api_console {
+    ## Build byzer-api-console
     "${base_dir}/dev/bin/update-console.sh" \
-    && mvn -f ${mlsql_console_path}/pom.xml clean compile package -DskipTests -Pshade
+    && mvn -f ${byzer_console_path}/pom.xml clean compile package -DskipTests -Pshade
     ## Check if jar file exists
-    if [[ ! -f "${mlsql_console_path}/target/mlsql-api-console-${MLSQL_CONSOLE_VERSION}.jar" ]]
+    if [[ ! -f "${byzer_console_path}/target/byzer-api-console-${BYZER_CONSOLE_VERSION}.jar" ]]
     then
-    echo "Failed to generate mlsql-api-console jar file, exit"
+    echo "Failed to generate byzer-api-console jar file, exit"
     exit 1
     fi
-    cp ${mlsql_console_path}/target/mlsql-api-console-${MLSQL_CONSOLE_VERSION}.jar ${lib_path}/
+    cp ${byzer_console_path}/target/byzer-api-console-${BYZER_CONSOLE_VERSION}.jar ${lib_path}/
 }
 
 ## Builds byzer_notebook shade jar

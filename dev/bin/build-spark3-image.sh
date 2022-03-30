@@ -18,7 +18,7 @@
 #
 
 ##############################################################################
-## Builds a mlsql-spark3 K8S image;
+## Builds a byzer-spark3 K8S image;
 ##############################################################################
 set -u
 set -e
@@ -56,7 +56,7 @@ function build_image {
 
     docker build -t byzer/byzer-lang-k8s:3.1.1-${BYZER_LANG_VERSION:-latest} \
     --build-arg SPARK_VERSION=${spark_version} \
-    --build-arg MLSQL_SPARK_VERSION=3.0 \
+    --build-arg BYZER_SPARK_VERSION=3.0 \
     --build-arg BYZER_LANG_VERSION=${BYZER_LANG_VERSION:-latest} \
     --build-arg JUICE_JAR_NAME=${juice_jar_name} \
     --build-arg SCALA_BINARY_VERSION=${SCALA_BINARY_VERSION} \
@@ -68,14 +68,14 @@ function build_image {
 base_dir=$(cd "$(dirname $0)/../.." && pwd)
 echo "Project base dir ${base_dir}"
 
-# import environment variables from mlsql-functions
-source "${base_dir}/dev/bin/mlsql-functions.sh"
+# import environment variables from byzer-functions
+source "${base_dir}/dev/bin/byzer-functions.sh"
 
 #In the CI process, this special parameter is used to avoid repeated builds.
 # If you are not using the build script in CI, you can use the default value regardless of this parameter.
 STEP_01_BUILD_SANDBOX_IMAGE=${STEP_01_BUILD_SANDBOX_IMAGE:-false}
 if [[ $STEP_01_BUILD_SANDBOX_IMAGE == "false" ]]; then
-  build_kolo_lang_distribution
+  build_byzer_lang_distribution
 fi
 
 build_image

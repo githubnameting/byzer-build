@@ -17,47 +17,47 @@
 # limitations under the License.
 #
 
-# Updates byzer-lang code. If MLSQL_TAG is specified, checkout it as branch ${tag}_branch;
+# Updates byzer-lang code. If BYZER_TAG is specified, checkout it as branch ${tag}_branch;
 # checkout & pull master branch otherwise
 
 set -e
 set -o pipefail
 
-## Please check if MLSQL_TAG is null before calling this function
+## Please check if BYZER_TAG is null before calling this function
 function checkout_tag {
-    echo "Checking out byzer-lang ${MLSQL_TAG}"
+    echo "Checking out byzer-lang ${BYZER_TAG}"
 
-    cd kolo-lang
+    cd byzer-lang
     git tag | xargs -I {} git tag -d {}
     git reset --hard
     git checkout master
     git fetch origin
-    [[ -z "`git branch | grep ${MLSQL_TAG}-branch`" ]] && echo "create new branch" || (echo "remove branch and create new" && git branch -D ${MLSQL_TAG}-branch)
-    git checkout -b ${MLSQL_TAG}-branch ${MLSQL_TAG}
+    [[ -z "`git branch | grep ${BYZER_TAG}-branch`" ]] && echo "create new branch" || (echo "remove branch and create new" && git branch -D ${BYZER_TAG}-branch)
+    git checkout -b ${BYZER_TAG}-branch ${BYZER_TAG}
     echo $?
 }
 
 base=$(cd "$(dirname $0)/../.." && pwd)
 cd "${base}"
 
-if [[ ! -d kolo-lang/.git ]]; then
+if [[ ! -d byzer-lang/.git ]]; then
     echo "cloning byzer-lang repo..."
-    git clone https://github.com/byzer-org/byzer-lang kolo-lang
-    if [[ -n ${MLSQL_TAG} ]]; then
+    git clone https://github.com/byzer-org/byzer-lang byzer-lang
+    if [[ -n ${BYZER_TAG} ]]; then
         checkout_tag
     else
-      if [[ -n ${KOLO_LANG_BRANCH} ]]; then
-          branch=${KOLO_LANG_BRANCH}
-          cd kolo-lang && git checkout "$branch" && git pull -r origin "$branch"
+      if [[ -n ${BYZER_LANG_BRANCH} ]]; then
+          branch=${BYZER_LANG_BRANCH}
+          cd byzer-lang && git checkout "$branch" && git pull -r origin "$branch"
       fi
     fi
 
 else
-    if [[ -n ${MLSQL_TAG} ]]; then
+    if [[ -n ${BYZER_TAG} ]]; then
         checkout_tag
     else
-        echo "update kolo-lang to latest..."
-        branch=${KOLO_LANG_BRANCH:-master}
-        ( cd kolo-lang && git checkout $branch && git pull -r origin $branch )
+        echo "update byzer-lang to latest..."
+        branch=${BYZER_LANG_BRANCH:-master}
+        ( cd byzer-lang && git checkout $branch && git pull -r origin $branch )
     fi
 fi

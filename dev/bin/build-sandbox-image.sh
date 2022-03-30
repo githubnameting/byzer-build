@@ -18,7 +18,7 @@
 #
 
 ##########################################################################
-## Builds a mlsql sandbox docker image; image includes MySQL, Byzer-lang engine
+## Builds a byzer sandbox docker image; image includes MySQL, Byzer-lang engine
 ## and Notebook
 ##########################################################################
 
@@ -27,7 +27,7 @@ set -e
 set -o pipefail
 
 self=$(cd "$(dirname $0)" && pwd)
-source "${self}/mlsql-functions.sh"
+source "${self}/byzer-functions.sh"
 
 function exit_with_usage {
   cat << EOF
@@ -36,7 +36,8 @@ Arguments are specified with the following environment variable:
 SPARK_VERSION           - Spark full version, 2.4.3/3.1.1 default 3.1.1
 BYZER_LANG_VERSION      - Byzer-lang version  default 2.3.0-SNAPSHOT
 BYZER_NOTEBOOK_VERSION  - byzer notebook version default 1.0.2-SNAPSHOT
-MLSQL_TAG               - mlsql git tag to checkout,   no default value
+BYZER_TAG               - byzer git tag to checkout,   no default value
+
 EOF
   exit 1
 }
@@ -48,14 +49,14 @@ function build_image {
     docker build -t ubuntu-baseimage -f "${base_dir}"/dev/docker/mysql/Dockerfile "${base_dir}"/dev/docker/mysql &&
     docker build -t mysql-python:8.0-3.6 -f "${base_image_path}"/Dockerfile ${base_image_path} &&
     docker build --build-arg SPARK_VERSION=${SPARK_VERSION} \
-    --build-arg MLSQL_SPARK_VERSION=${MLSQL_SPARK_VERSION} \
+    --build-arg BYZER_SPARK_VERSION=${BYZER_SPARK_VERSION} \
     --build-arg BYZER_LANG_VERSION=${BYZER_LANG_VERSION} \
     --build-arg BYZER_NOTEBOOK_VERSION=${BYZER_NOTEBOOK_VERSION} \
     --build-arg SPARK_TGZ_NAME=${SPARK_TGZ_NAME} \
     --build-arg AZURE_BLOB_NAME=${AZURE_BLOB_NAME} \
     --build-arg SCALA_BINARY_VERSION=${SCALA_BINARY_VERSION} \
     -t byzer/byzer-sandbox:${SPARK_VERSION}-${BYZER_LANG_VERSION:-latest} \
-    -f "${mlsql_sandbox_path}"/Dockerfile \
+    -f "${byzer_sandbox_path}"/Dockerfile \
     "${base_dir}"/dev
 }
 
@@ -63,7 +64,7 @@ if [[ $@ == *"help"* ]]; then
     exit_with_usage
 fi
 
-build_kolo_lang_distribution &&
+build_byzer_lang_distribution &&
 build_byzer_notebook &&
 build_image &&
 exit 0

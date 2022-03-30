@@ -27,11 +27,11 @@ function exit_with_usage {
   cat << EOF
 Usage: build-sandbox-image.sh
 Arguments are specified with the following environment variable:
-MLSQL_SPARK_VERSION     - the spark version, 2.3/2.4/3.0  default 3.0
+BYZER_SPARK_VERSION     - the spark version, 2.3/2.4/3.0  default 3.0
 SPARK_VERSION           - Spark full version, 2.4.3/3.1.1 default 3.1.1
 BYZER_LANG_VERSION      - Byzer-lang version  default 2.3.0-SNAPSHOT
 BYZER_NOTEBOOK_VERSION  - byzer notebook version default 1.0.2-SNAPSHOT
-MLSQL_TAG               - mlsql git tag to checkout,   no default value
+BYZER_TAG               - byzer git tag to checkout,   no default value
 EOF
   exit 1
 }
@@ -44,7 +44,7 @@ function build_images {
 #    docker-compose build  --parallel \
     docker-compose build \
      --build-arg SPARK_VERSION=$SPARK_VERSION \
-     --build-arg MLSQL_SPARK_VERSION=$MLSQL_SPARK_VERSION \
+     --build-arg BYZER_SPARK_VERSION=$BYZER_SPARK_VERSION \
      --build-arg BYZER_LANG_VERSION=$BYZER_LANG_VERSION \
      --build-arg SPARK_TGZ_NAME=$SPARK_TGZ_NAME \
      --build-arg HADOOP_TGZ_NAME=$HADOOP_TGZ_NAME \
@@ -53,7 +53,7 @@ function build_images {
      --build-arg SCALA_BINARY_VERSION=${SCALA_BINARY_VERSION}
 }
 
-source "${self}/mlsql-functions.sh"
+source "${self}/byzer-functions.sh"
 
 if [[ $@ == *"help"* ]]; then
     exit_with_usage
@@ -64,7 +64,7 @@ fi
 STEP_01_BUILD_SANDBOX_IMAGE=${STEP_01_BUILD_SANDBOX_IMAGE:-false}
 STEP_02_BUILD_K8S_IMAGE=${STEP_02_BUILD_K8S_IMAGE:-false}
 if [[ $STEP_01_BUILD_SANDBOX_IMAGE == "false" && $STEP_02_BUILD_K8S_IMAGE == "false" ]]; then
-  build_kolo_lang_distribution
+  build_byzer_lang_distribution
 fi
 
 if [[ $STEP_01_BUILD_SANDBOX_IMAGE == "false" ]]; then

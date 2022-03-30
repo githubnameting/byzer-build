@@ -57,10 +57,10 @@ ARG BYZER_LANG_VERSION=latest
 ARG DOWNLOAD_DIR=nightly-build
 
 ENV BASE_DIR /work/server
-ENV MLSQL_HOME ${BASE_DIR}/byzer-lang
+ENV BYZER_HOME ${BASE_DIR}/byzer-lang
 ENV JAVA_HOME /work/server/byzer-lang/jdk8
 ENV SPARK_HOME /work/server/byzer-lang/spark
-ENV PATH=$PATH:${JAVA_HOME}/bin:${MLSQL_HOME}/bin:${SPARK_HOME}/sbin:${SPARK_HOME}/bin:/opt/conda/bin
+ENV PATH=$PATH:${JAVA_HOME}/bin:${BYZER_HOME}/bin:${SPARK_HOME}/sbin:${SPARK_HOME}/bin:/opt/conda/bin
 
 # Byzer-lang
 RUN mkdir -p /work/server/

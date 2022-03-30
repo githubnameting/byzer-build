@@ -19,4 +19,4 @@
 
 set base=%~dp0%\..\
 
-java -classpath %base%\main\streamingpro-mlsql-spark_3.0_2.12-2.3.0-SNAPSHOT.jar;%base%\spark\*;%base%\libs\*;%base%\plugin\*; tech.mlsql.example.app.LocalSparkServiceApp -streaming.plugin.clzznames tech.mlsql.plugins.assert.app.MLSQLAssert,tech.mlsql.plugins.ds.MLSQLExcelApp
+java -classpath %base%\main\streamingpro-byzer-spark_3.0_2.12-2.3.0-SNAPSHOT.jar;%base%\spark\*;%base%\libs\*;%base%\plugin\*; tech.byzer.example.app.LocalSparkServiceApp -streaming.plugin.clzznames tech.byzer.plugins.assert.app.BYZERAssert,tech.byzer.plugins.ds.BYZERExcelApp

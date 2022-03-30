@@ -19,7 +19,7 @@
 
 # 环境变量:
 # SPARK_HOME
-# MLSQL_HOME
+# BYZER_HOME
 #
 # Arguments:
 # K8S API Server and port
@@ -28,28 +28,28 @@ set -u
 set -e
 set -o pipefail
 
-MLSQL_SPARK_VERSION=${MLSQL_SPARK_VERSION:-3.0}
+BYZER_SPARK_VERSION=${BYZER_SPARK_VERSION:-3.0}
 BYZER_LANG_VERSION=${BYZER_LANG_VERSION:-2.1.0-SNAPSHOT}
 
-if [[ ${MLSQL_SPARK_VERSION} = "2.3" || ${MLSQL_SPARK_VERSION} = "2.4" ]]
+if [[ ${BYZER_SPARK_VERSION} = "2.3" || ${BYZER_SPARK_VERSION} = "2.4" ]]
 then
   scala_version=2.11
-elif [[ ${MLSQL_SPARK_VERSION} = "3.0" ]]
+elif [[ ${BYZER_SPARK_VERSION} = "3.0" ]]
 then
   scala_version=2.12
 else
-  echo "Spark-${MLSQL_SPARK_VERSION} is not supported"
+  echo "Spark-${BYZER_SPARK_VERSION} is not supported"
   exit 1
 fi
 
-container_lib_path="local:///home/deploy/mlsql/libs/"
-mlsql_jar="${container_lib_path}/streamingpro-mlsql-spark_${MLSQL_SPARK_VERSION}_${scala_version}-${BYZER_LANG_VERSION}.jar"
+container_lib_path="local:///home/deploy/byzer/libs/"
+byzer_jar="${container_lib_path}/streamingpro-byzer-spark_${BYZER_SPARK_VERSION}_${scala_version}-${BYZER_LANG_VERSION}.jar"
 auxiliary_jars="${container_lib_path}/juicefs-hadoop-0.15.2-linux-amd64.jar:${container_lib_path}/ansj_seg-5.1.6.jar:${container_lib_path}/nlp-lang-1.7.8.jar"
 K8S_URL=${K8S_URL:-https://localhost:6443}
-image="mlsql-engine:${MLSQL_SPARK_VERSION}-${BYZER_LANG_VERSION}"
+image="byzer-engine:${BYZER_SPARK_VERSION}-${BYZER_LANG_VERSION}"
 
 echo "SPARK_HOME ${SPARK_HOME}"
-echo "Jar ${mlsql_jar}"
+echo "Jar ${byzer_jar}"
 echo "Image ${image}"
 echo " "
 
@@ -57,7 +57,7 @@ DRIVER_MEMORY=${DRIVER_MEMORY:-1g}
 $SPARK_HOME/bin/spark-submit --class streaming.core.StreamingApp \
         --master k8s://${K8S_URL} \
         --deploy-mode cluster \
-        --name mlsql \
+        --name byzer \
         --conf "spark.kubernetes.container.image=${image}" \
         --driver-memory ${DRIVER_MEMORY} \
         --executor-memory 1G \
@@ -70,8 +70,8 @@ $SPARK_HOME/bin/spark-submit --class streaming.core.StreamingApp \
         --driver-library-path "${auxiliary_jars}" \
         --conf spark.executor.extraLibraryPath="${auxiliary_jars}" \
 				--verbose \
-        ${mlsql_jar} \
-        -streaming.name mlsql \
+        ${byzer_jar} \
+        -streaming.name byzer \
         -streaming.platform spark \
         -streaming.rest true \
         -streaming.driver.port 9003 \

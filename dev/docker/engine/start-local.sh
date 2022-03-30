@@ -19,7 +19,7 @@
 
 ## 环境变量:
 ## SPARK_HOME
-## MLSQL_HOME
+## BYZER_HOME
 ##
 
 set -u
@@ -33,15 +33,15 @@ for env in SPARK_HOME ; do
   fi
 done
 
-## 本脚本部署在${MLSQL_HOME}/bin 目录
-if [ -z "${MLSQL_HOME}" ]; then
-  export MLSQL_HOME="$(cd "`dirname "$0"`"/..; pwd)"
-  echo "MLSQL_HOME is not set, default to ${MLSQL_HOME}"
+## 本脚本部署在${BYZER_HOME}/bin 目录
+if [ -z "${BYZER_HOME}" ]; then
+  export BYZER_HOME="$(cd "`dirname "$0"`"/..; pwd)"
+  echo "BYZER_HOME is not set, default to ${BYZER_HOME}"
 fi
 
-JARS=$(echo ${MLSQL_HOME}/libs/*.jar | tr ' ' ',')
-EXT_JARS=$(echo ${MLSQL_HOME}/libs/*.jar | tr ' ' ':')
-MAIN_JAR=$(ls ${MLSQL_HOME}/libs|grep 'streamingpro-mlsql')
+JARS=$(echo ${BYZER_HOME}/libs/*.jar | tr ' ' ',')
+EXT_JARS=$(echo ${BYZER_HOME}/libs/*.jar | tr ' ' ':')
+MAIN_JAR=$(ls ${BYZER_HOME}/libs|grep 'streamingpro-mlsql')
 export DRIVER_MEMORY=${DRIVER_MEMORY:-2g}
 
 echo
@@ -50,7 +50,7 @@ echo "Run with spark : $SPARK_HOME"
 echo "With DRIVER_MEMORY=${DRIVER_MEMORY:-2g}"
 echo
 echo "JARS: ${JARS}"
-echo "MAIN_JAR: ${MLSQL_HOME}/libs/${MAIN_JAR}"
+echo "MAIN_JAR: ${BYZER_HOME}/libs/${MAIN_JAR}"
 echo "#############"
 echo
 echo
@@ -69,7 +69,7 @@ $SPARK_HOME/bin/spark-submit --class streaming.core.StreamingApp \
         --conf "spark.scheduler.mode=FAIR" \
         --conf "spark.driver.extraClassPath=${EXT_JARS}" \
         --conf "spark.executor.extraClassPath=${EXT_JARS}" \
-        ${MLSQL_HOME}/libs/${MAIN_JAR}    \
+        ${BYZER_HOME}/libs/${MAIN_JAR}    \
         -streaming.name mlsql    \
         -streaming.platform spark   \
         -streaming.rest true   \

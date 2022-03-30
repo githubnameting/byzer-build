@@ -6,7 +6,7 @@
 # http://code.google.com/p/sequel-pro/
 #
 # Host: 127.0.0.1 (MySQL 5.7.28-log)
-# Database: mlsql_console
+# Database: byzer_console
 # Generation Time: 2020-12-24 04:27:40 +0000
 # ************************************************************
 
@@ -19,9 +19,9 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE mlsql_console CHARACTER SET utf8;
+CREATE DATABASE byzer_console CHARACTER SET utf8;
 
-USE mlsql_console;
+USE byzer_console;
 
 # Dump of table access_token
 # ------------------------------------------------------------
@@ -31,11 +31,11 @@ DROP TABLE IF EXISTS `access_token`;
 CREATE TABLE `access_token` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `create_at` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
-  KEY `mlsql_user_id` (`mlsql_user_id`)
+  KEY `byzer_user_id` (`byzer_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `aliyun_cluster_process`;
 
 CREATE TABLE `aliyun_cluster_process` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `start_time` text,
   `end_time` text,
@@ -72,33 +72,33 @@ CREATE TABLE `app_kv` (
 
 
 
-# Dump of table mlsql_analysis_plugin
+# Dump of table byzer_analysis_plugin
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_analysis_plugin`;
+DROP TABLE IF EXISTS `byzer_analysis_plugin`;
 
-CREATE TABLE `mlsql_analysis_plugin` (
+CREATE TABLE `byzer_analysis_plugin` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   `content` mediumtext,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_apply
+# Dump of table byzer_apply
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_apply`;
+DROP TABLE IF EXISTS `byzer_apply`;
 
-CREATE TABLE `mlsql_apply` (
+CREATE TABLE `byzer_apply` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   `content` longtext,
   `status` int(11) DEFAULT NULL,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `created_at` bigint(20) DEFAULT NULL,
   `finish_at` bigint(20) DEFAULT NULL,
   `script_file_id` int(11) DEFAULT NULL,
@@ -107,49 +107,49 @@ CREATE TABLE `mlsql_apply` (
   `apply_sql` longtext,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
-  KEY `mlsql_user_id` (`mlsql_user_id`)
+  KEY `byzer_user_id` (`byzer_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_backend_proxy
+# Dump of table byzer_backend_proxy
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_backend_proxy`;
+DROP TABLE IF EXISTS `byzer_backend_proxy`;
 
-CREATE TABLE `mlsql_backend_proxy` (
+CREATE TABLE `byzer_backend_proxy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mlsql_group_id` int(11) DEFAULT NULL,
+  `byzer_group_id` int(11) DEFAULT NULL,
   `backend_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `backend_name` (`backend_name`),
-  KEY `mlsql_group_id` (`mlsql_group_id`)
+  KEY `byzer_group_id` (`byzer_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_ds
+# Dump of table byzer_ds
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_ds`;
+DROP TABLE IF EXISTS `byzer_ds`;
 
-CREATE TABLE `mlsql_ds` (
+CREATE TABLE `byzer_ds` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   `format` varchar(256) DEFAULT NULL,
   `params` text,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_engine
+# Dump of table byzer_engine
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_engine`;
+DROP TABLE IF EXISTS `byzer_engine`;
 
-CREATE TABLE `mlsql_engine` (
+CREATE TABLE `byzer_engine` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   `url` varchar(1024) DEFAULT NULL,
@@ -165,12 +165,12 @@ CREATE TABLE `mlsql_engine` (
 
 
 
-# Dump of table mlsql_group
+# Dump of table byzer_group
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_group`;
+DROP TABLE IF EXISTS `byzer_group`;
 
-CREATE TABLE `mlsql_group` (
+CREATE TABLE `byzer_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -179,47 +179,47 @@ CREATE TABLE `mlsql_group` (
 
 
 
-# Dump of table mlsql_group_role
+# Dump of table byzer_group_role
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_group_role`;
+DROP TABLE IF EXISTS `byzer_group_role`;
 
-CREATE TABLE `mlsql_group_role` (
+CREATE TABLE `byzer_group_role` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
-  `mlsql_group_id` int(11) DEFAULT NULL,
+  `byzer_group_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
-  KEY `mlsql_group_id` (`mlsql_group_id`)
+  KEY `byzer_group_id` (`byzer_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_group_role_auth
+# Dump of table byzer_group_role_auth
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_group_role_auth`;
+DROP TABLE IF EXISTS `byzer_group_role_auth`;
 
-CREATE TABLE `mlsql_group_role_auth` (
+CREATE TABLE `byzer_group_role_auth` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mlsql_table_id` int(11) DEFAULT NULL,
-  `mlsql_group_role_id` int(11) DEFAULT NULL,
+  `byzer_table_id` int(11) DEFAULT NULL,
+  `byzer_group_role_id` int(11) DEFAULT NULL,
   `operate_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `mlsql_table_id` (`mlsql_table_id`),
-  KEY `mlsql_group_role_id` (`mlsql_group_role_id`)
+  KEY `byzer_table_id` (`byzer_table_id`),
+  KEY `byzer_group_role_id` (`byzer_group_role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_group_script_file
+# Dump of table byzer_group_script_file
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_group_script_file`;
+DROP TABLE IF EXISTS `byzer_group_script_file`;
 
-CREATE TABLE `mlsql_group_script_file` (
+CREATE TABLE `byzer_group_script_file` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `mlsql_group_id` int(11) DEFAULT NULL,
+  `byzer_group_id` int(11) DEFAULT NULL,
   `script_file_id` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -227,52 +227,52 @@ CREATE TABLE `mlsql_group_script_file` (
 
 
 
-# Dump of table mlsql_group_table
+# Dump of table byzer_group_table
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_group_table`;
+DROP TABLE IF EXISTS `byzer_group_table`;
 
-CREATE TABLE `mlsql_group_table` (
+CREATE TABLE `byzer_group_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mlsql_table_id` int(11) DEFAULT NULL,
-  `mlsql_group_id` int(11) DEFAULT NULL,
+  `byzer_table_id` int(11) DEFAULT NULL,
+  `byzer_group_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `mlsql_table_id` (`mlsql_table_id`),
-  KEY `mlsql_group_id` (`mlsql_group_id`)
+  KEY `byzer_table_id` (`byzer_table_id`),
+  KEY `byzer_group_id` (`byzer_group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_group_user
+# Dump of table byzer_group_user
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_group_user`;
+DROP TABLE IF EXISTS `byzer_group_user`;
 
-CREATE TABLE `mlsql_group_user` (
+CREATE TABLE `byzer_group_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mlsql_group_id` int(11) DEFAULT NULL,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_group_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `mlsql_group_id` (`mlsql_group_id`),
-  KEY `mlsql_user_id` (`mlsql_user_id`)
+  KEY `byzer_group_id` (`byzer_group_id`),
+  KEY `byzer_user_id` (`byzer_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_indexer
+# Dump of table byzer_indexer
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_indexer`;
+DROP TABLE IF EXISTS `byzer_indexer`;
 
-CREATE TABLE `mlsql_indexer` (
+CREATE TABLE `byzer_indexer` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `sync_interval` bigint(20) DEFAULT NULL,
   `last_execute_time` bigint(20) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `content` longtext CHARACTER SET utf8,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `last_status` int(11) DEFAULT NULL,
   `indexer_config` mediumtext CHARACTER SET utf8,
   `last_fail_msg` text CHARACTER SET utf8,
@@ -289,17 +289,17 @@ CREATE TABLE `mlsql_indexer` (
 
 
 
-# Dump of table mlsql_job
+# Dump of table byzer_job
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_job`;
+DROP TABLE IF EXISTS `byzer_job`;
 
-CREATE TABLE `mlsql_job` (
+CREATE TABLE `byzer_job` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   `content` longtext,
   `status` int(11) DEFAULT NULL,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `created_at` bigint(20) DEFAULT NULL,
   `finish_at` bigint(20) DEFAULT NULL,
   `script_file_id` int(11) DEFAULT NULL,
@@ -310,28 +310,28 @@ CREATE TABLE `mlsql_job` (
 
 
 
-# Dump of table mlsql_role_member
+# Dump of table byzer_role_member
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_role_member`;
+DROP TABLE IF EXISTS `byzer_role_member`;
 
-CREATE TABLE `mlsql_role_member` (
+CREATE TABLE `byzer_role_member` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mlsql_user_id` int(11) DEFAULT NULL,
-  `mlsql_group_role_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
+  `byzer_group_role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `mlsql_user_id` (`mlsql_user_id`),
-  KEY `mlsql_group_role_id` (`mlsql_group_role_id`)
+  KEY `byzer_user_id` (`byzer_user_id`),
+  KEY `byzer_group_role_id` (`byzer_group_role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table mlsql_table
+# Dump of table byzer_table
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_table`;
+DROP TABLE IF EXISTS `byzer_table`;
 
-CREATE TABLE `mlsql_table` (
+CREATE TABLE `byzer_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `db` varchar(255) DEFAULT NULL,
@@ -343,12 +343,12 @@ CREATE TABLE `mlsql_table` (
 
 
 
-# Dump of table mlsql_user
+# Dump of table byzer_user
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_user`;
+DROP TABLE IF EXISTS `byzer_user`;
 
-CREATE TABLE `mlsql_user` (
+CREATE TABLE `byzer_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
@@ -361,16 +361,16 @@ CREATE TABLE `mlsql_user` (
 
 
 
-# Dump of table mlsql_workshop_table
+# Dump of table byzer_workshop_table
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `mlsql_workshop_table`;
+DROP TABLE IF EXISTS `byzer_workshop_table`;
 
-CREATE TABLE `mlsql_workshop_table` (
+CREATE TABLE `byzer_workshop_table` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `table_name` varchar(256) DEFAULT NULL,
   `content` longtext,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `session_id` varchar(256) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `table_schema` mediumtext,
@@ -409,14 +409,14 @@ DROP TABLE IF EXISTS `script_user_rw`;
 CREATE TABLE `script_user_rw` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `script_file_id` int(11) DEFAULT NULL,
-  `mlsql_user_id` int(11) DEFAULT NULL,
+  `byzer_user_id` int(11) DEFAULT NULL,
   `is_owner` int(11) DEFAULT NULL,
   `readable` int(11) DEFAULT NULL,
   `writable` int(11) DEFAULT NULL,
   `is_delete` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `script_file_id` (`script_file_id`),
-  KEY `mlsql_user_id` (`mlsql_user_id`)
+  KEY `byzer_user_id` (`byzer_user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

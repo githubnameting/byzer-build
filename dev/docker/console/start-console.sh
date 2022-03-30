@@ -16,20 +16,20 @@
 # limitations under the License.
 #
 
-MLSQL_CONSOLE_VERSION=${MLSQL_CONSOLE_VERSION:-2.2.0-SNAPSHOT}
-MLSQL_CONSOLE_HOME=${MLSQL_CONSOLE_HOME:-/home/deploy/mlsql-console}
-MLSQL_ENGINE_URL=${MLSQL_ENGINE_URL:-"http://127.0.0.1:9003"}
+BYZER_CONSOLE_VERSION=${BYZER_CONSOLE_VERSION:-2.2.0-SNAPSHOT}
+BYZER_CONSOLE_HOME=${BYZER_CONSOLE_HOME:-/home/deploy/byzer-console}
+BYZER_ENGINE_URL=${BYZER_ENGINE_URL:-"http://127.0.0.1:9003"}
 
 echo "Starting console"
-echo "MLSQL_CONSOLE_VERSION ${MLSQL_CONSOLE_VERSION}"
-echo "MLSQL_CONSOLE_HOME ${MLSQL_CONSOLE_HOME}"
-echo "MLSQL_ENGINE_URL ${MLSQL_ENGINE_URL}"
+echo "BYZER_CONSOLE_VERSION ${BYZER_CONSOLE_VERSION}"
+echo "BYZER_CONSOLE_HOME ${BYZER_CONSOLE_HOME}"
+echo "BYZER_ENGINE_URL ${BYZER_ENGINE_URL}"
 echo -ex
 
-## Start mlsql-api-console
-java -cp ${MLSQL_CONSOLE_HOME}/libs/mlsql-api-console-${MLSQL_CONSOLE_VERSION}.jar:./ tech.mlsql.MLSQLConsole \
--mlsql_engine_url ${MLSQL_ENGINE_URL} \
+## Start byzer-api-console
+java -cp ${BYZER_CONSOLE_HOME}/libs/byzer-api-console-${BYZER_CONSOLE_VERSION}.jar:./ tech.byzer.BYZERConsole \
+-byzer_engine_url ${BYZER_ENGINE_URL} \
 -my_url http://localhost:9002 \
 -user_home /work/user/ \
 -enable_auth_center false \
--config ${MLSQL_CONSOLE_HOME}/conf/application.yml
+-config ${BYZER_CONSOLE_HOME}/conf/application.yml

@@ -16,10 +16,10 @@
 #
 
 # The docker build command should be invoked from the dev/docker directory E.g.:
-# docker build -t mlsql-console:2.1.0-SNAPSHOT -f console/Dockerfile .
+# docker build -t byzer-console:2.1.0-SNAPSHOT -f console/Dockerfile .
 FROM ubuntu:20.04
 
-ARG MLSQL_CONSOLE_VERSION=2.1.0-SNAPSHOT
+ARG BYZER_CONSOLE_VERSION=2.1.0-SNAPSHOT
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
@@ -30,21 +30,21 @@ RUN set -ex && \
 
 ## Setup environment variables
 ENV BASE_DIR /home/deploy
-ENV MLSQL_CONSOLE_VERSION ${MLSQL_CONSOLE_VERSION}
-ENV MLSQL_CONSOLE_HOME ${BASE_DIR}/mlsql-console
+ENV BYZER_CONSOLE_VERSION ${BYZER_CONSOLE_VERSION}
+ENV BYZER_CONSOLE_HOME ${BASE_DIR}/byzer-console
 
 ## Creates directories
 RUN mkdir -p /work/user/
-RUN mkdir -p ${MLSQL_CONSOLE_HOME}/libs
-RUN mkdir -p ${MLSQL_CONSOLE_HOME}/conf
-RUN mkdir -p ${MLSQL_CONSOLE_HOME}/bin
+RUN mkdir -p ${BYZER_CONSOLE_HOME}/libs
+RUN mkdir -p ${BYZER_CONSOLE_HOME}/conf
+RUN mkdir -p ${BYZER_CONSOLE_HOME}/bin
 
-# mlsql-api-console
-COPY mlsql-sandbox/lib/mlsql-api-console-${MLSQL_CONSOLE_VERSION}.jar ${MLSQL_CONSOLE_HOME}/libs/
-COPY mlsql-sandbox/conf/application.docker.yml ${MLSQL_CONSOLE_HOME}/conf/application.yml
+# byzer-api-console
+COPY byzer-sandbox/lib/byzer-api-console-${BYZER_CONSOLE_VERSION}.jar ${BYZER_CONSOLE_HOME}/libs/
+COPY byzer-sandbox/conf/application.docker.yml ${BYZER_CONSOLE_HOME}/conf/application.yml
 ## Entrypoint script
-COPY console/start-console.sh ${MLSQL_CONSOLE_HOME}/bin/
+COPY console/start-console.sh ${BYZER_CONSOLE_HOME}/bin/
 
-WORKDIR ${MLSQL_CONSOLE_HOME}
+WORKDIR ${BYZER_CONSOLE_HOME}
 
-ENTRYPOINT ${MLSQL_CONSOLE_HOME}/bin/start-console.sh
+ENTRYPOINT ${BYZER_CONSOLE_HOME}/bin/start-console.sh

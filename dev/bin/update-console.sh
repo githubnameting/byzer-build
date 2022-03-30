@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-# Updates mlsql-api-console code. If MLSQL_CONSOLE_TAG is specified,
+# Updates byzer-api-console code. If BYZER_CONSOLE_TAG is specified,
 # checkout it as branch ${tag}_branch; checkout & pull master branch
 # otherwise
 set +u
@@ -25,15 +25,15 @@ set -e
 set -o pipefail
 
 function checkout_tag {
-    echo "Checking out ${MLSQL_CONSOLE_TAG}"
+    echo "Checking out ${BYZER_CONSOLE_TAG}"
 
     cd console
     git tag | xargs -I {} git tag -d {}
     git reset --hard
     git checkout master
     git fetch origin
-    [[ -z "`git branch | grep ${MLSQL_CONSOLE_TAG}-branch`" ]] && echo "create new branch" || (echo "remove branch and create new" && git branch -D ${MLSQL_CONSOLE_TAG}-branch)
-    git checkout -b ${MLSQL_CONSOLE_TAG}-branch ${MLSQL_CONSOLE_TAG}
+    [[ -z "`git branch | grep ${BYZER_CONSOLE_TAG}-branch`" ]] && echo "create new branch" || (echo "remove branch and create new" && git branch -D ${BYZER_CONSOLE_TAG}-branch)
+    git checkout -b ${BYZER_CONSOLE_TAG}-branch ${BYZER_CONSOLE_TAG}
     echo $?
 }
 
@@ -42,12 +42,12 @@ cd "${self}" || exit 1
 
 if [[ ! -d console/.git ]]; then
     echo "cloning console repo..."
-    git clone https://github.com/allwefantasy/mlsql-api-console console
-    if [[ -n ${MLSQL_CONSOLE_TAG} ]]; then
+    git clone https://github.com/allwefantasy/byzer-api-console console
+    if [[ -n ${BYZER_CONSOLE_TAG} ]]; then
         checkout_tag
     fi
 else
-    if [[ -n ${MLSQL_CONSOLE_TAG} ]]; then 
+    if [[ -n ${BYZER_CONSOLE_TAG} ]]; then
         checkout_tag
     else
         echo "update console to latest..."

@@ -4,22 +4,22 @@
 
 There are some manual steps before building:
 
-1. Download [Spark 2.4.3(hadoop-2.7 based) or 3.1.1(hadoop-3.2 based) Distribution](https://archive.apache.org/dist/spark/)  and put it to dev/docker/mlsql-sandbox/lib
+1. Download [Spark 2.4.3(hadoop-2.7 based) or 3.1.1(hadoop-3.2 based) Distribution](https://archive.apache.org/dist/spark/)  and put it to dev/docker/byzer-sandbox/lib
 
-2. Download [NLP jars](http://download.mlsql.tech/nlp/) and put them to dev/docker/mlsql-sandbox/lib.
+2. Download [NLP jars](https://download.byzer.org/byzer/misc/) and put them to dev/docker/byzer-sandbox/lib.
 
 3. Start building
 
 ```shell   
 ## For Spark 2.4.3 bundle
-export MLSQL_SPARK_VERSION=2.4
+export BYZER_SPARK_VERSION=2.4
 export SPARK_VERSION=2.4.3
 export BYZER_LANG_VERSION=2.3.0-SNAPSHOT
 export BYZER_NOTEBOOK_VERSION=1.0.2-SNAPSHOT
 ./dev/bin/build-sandbox-image.sh
 
 ## For Spark 3.1.1 bundle
-export MLSQL_SPARK_VERSION=3.0
+export BYZER_SPARK_VERSION=3.0
 export SPARK_VERSION=3.1.1
 export BYZER_LANG_VERSION=2.3.0-SNAPSHOT
 export BYZER_NOTEBOOK_VERSION=1.0.2-SNAPSHOT
@@ -28,11 +28,11 @@ export BYZER_NOTEBOOK_VERSION=1.0.2-SNAPSHOT
 On the other hand, we support specifying git tag to build image:
 
 ## Build with tag
-export MLSQL_SPARK_VERSION=3.0
+export BYZER_SPARK_VERSION=3.0
 export SPARK_VERSION=3.1.1
 export BYZER_LANG_VERSION=2.3.0-SNAPSHOT
 export BYZER_NOTEBOOK_VERSION=1.0.2-SNAPSHOT
-export MLSQL_TAG=v2.2.0
+export BYZER_TAG=v2.2.0
 export BYZER_NOTEBOOK_TAG=v0.0.1-test
 ./dev/bin/build-sandbox-image.sh
 ```
@@ -55,15 +55,15 @@ export BYZER_LANG_VERSION=2.2.1-SNAPSHOT
 ````shell
 export SPARK_VERSION=<2.4.3 || 3.1.1>
 export SPARK_HOME=/work/spark-${SPARK_VERSION}
-export MLSQL_HOME=/home/deploy/kolo-lang
+export BYZER_HOME=/home/deploy/byzer-lang
 export BYZER_NOTEBOOK_HOME=/home/deploy/byzer-notebook
-export PATH=$PATH:${MLSQL_HOME}/bin:${SPARK_HOME}/sbin:${SPARK_HOME}/bin
+export PATH=$PATH:${BYZER_HOME}/bin:${SPARK_HOME}/sbin:${SPARK_HOME}/bin
 ````
 
 ## Scripts
 ```shell
 /home/deploy/start-sandbox.sh
-$MLSQL_HOME/bin/start-local.sh
+$BYZER_HOME/bin/start-local.sh
 ```
 
 ## Start service
@@ -93,7 +93,7 @@ sh -x dev/bin/run-sandbox-container.sh
         |-- spark-${SPARK_VERSION}/
 |-- /home/deploy/
         |-- README.md
-        |-- mlsql/
+        |-- byzer/
             |-- bin/                          
             |-- conf/                         
             |-- libs/                         

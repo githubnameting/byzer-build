@@ -5,11 +5,11 @@ nohup.out
 **/*.tgz
 **/*.tar.gz
 dev/lib/*
-dev/docker/mlsql-sandbox/lib/*.jar
-dev/docker/mlsql-sandbox/lib/*.tar.gz
+dev/docker/byzer-sandbox/lib/*.jar
+dev/docker/byzer-sandbox/lib/*.tar.gz
 
-mlsql
-kolo-lang
+byzer
+byzer-lang
 console/
 byzer-notebook/
 .DS_Store

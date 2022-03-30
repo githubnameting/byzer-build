@@ -20,9 +20,9 @@
 base=$(cd "$(dirname $0)/.." && pwd)
 cd "$base" || return
 
-MAIN_JAR=$(ls ${base}/main | grep 'streamingpro-mlsql')
+MAIN_JAR=$(ls ${base}/main | grep 'streamingpro-byzer')
 echo ${MAIN_JAR}
 
 java -cp ${base}/main/${MAIN_JAR}:${base}/spark/*:${base}/libs/*:${base}/plugin/* \
-tech.mlsql.example.app.LocalSparkServiceApp \
--streaming.plugin.clzznames tech.mlsql.plugins.assert.app.MLSQLAssert,tech.mlsql.plugins.ds.MLSQLExcelApp
+tech.byzer.example.app.LocalSparkServiceApp \
+-streaming.plugin.clzznames tech.byzer.plugins.assert.app.BYZERAssert,tech.byzer.plugins.ds.BYZERExcelApp
